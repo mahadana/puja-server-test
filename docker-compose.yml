@@ -1,0 +1,22 @@
+version: "3.8"
+   
+services:
+  db:
+    image: postgres
+    restart: unless-stopped
+    ports:
+      - 127.0.0.1:${DB_PORT}:${DB_PORT}
+    environment:
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+  app:
+    build: .
+    command: npm start
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - "4000:4000"
+    depends_on:
+      - db
