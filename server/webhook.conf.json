@@ -1,0 +1,51 @@
+[
+  {
+    "id": "deploy",
+    "execute-command": "/opt/puja-server-test/server/deploy.sh",
+    "command-working-directory": "/opt/puja-server-test",
+    "include-command-output-in-response": true
+  },
+  {
+    "id": "github-deploy",
+    "execute-command": "/opt/puja-server-test/server/deploy.sh",
+    "command-working-directory": "/opt/puja-server-test",
+    "pass-arguments-to-command": [
+      {
+        "source": "payload",
+        "name": "head_commit.id"
+      },
+      {
+        "source": "payload",
+        "name": "pusher.name"
+      },
+      {
+        "source": "payload",
+        "name": "pusher.email"
+      }
+    ],
+    "trigger-rule": {
+      "and": [
+        {
+          "match": {
+            "type": "payload-hash-sha1",
+            "secret": "SECRET",
+            "parameter": {
+              "source": "header",
+              "name": "X-Hub-Signature"
+            }
+          }
+        },
+        {
+          "match": {
+            "type": "value",
+            "value": "refs/heads/master",
+            "parameter": {
+              "source": "payload",
+              "name": "ref"
+            }
+          }
+        }
+      ]
+    }
+  }
+]
