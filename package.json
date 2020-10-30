@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "babel-node index.js",
+    "build": "babel -d dist src",
+    "serve": "node dist/index.js",
+    "start": "nodemon --exec npx babel-node src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -17,8 +19,11 @@
     "sequelize": "^6.3.5"
   },
   "devDependencies": {
+    "@babel/cli": "^7.12.1",
     "@babel/core": "^7.12.0",
     "@babel/node": "^7.10.5",
-    "@babel/preset-env": "^7.12.0"
+    "@babel/plugin-transform-runtime": "^7.12.1",
+    "@babel/preset-env": "^7.12.0",
+    "nodemon": "^2.0.6"
   }
 }

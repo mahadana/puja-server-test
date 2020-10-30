@@ -5,5 +5,5 @@
 cd /opt/puja-server-test
 git pull
 docker-compose build
-docker-compose stop
-docker-compose up -d
+docker-compose rm -fs app
+docker-compose -f docker-compose.yml -f docker-compose.server.yml up -d

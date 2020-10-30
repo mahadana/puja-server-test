@@ -19,10 +19,6 @@ DB_USER=user
 DB_PASSWORD=password
 END
 
-docker-compose down
-git pull
-docker-compose up -d
-
 test -x /usr/sbin/nginx || apt-get install -y nginx-light
 test -x /usr/bin/certbot || apt-get install -y certbot
 test -d /usr/share/doc/python3-certbot-nginx || apt-get install -y python3-certbot-nginx
@@ -42,3 +38,5 @@ cp server/webhook.conf /etc/webhook.conf
 perl -pi -e 's/SECRET/mysecret/' /etc/webhook.conf
 # TODO ask for and manipulate secret
 systemctl restart webhook.service
+
+/opt/puja-server-test/server/deploy.sh

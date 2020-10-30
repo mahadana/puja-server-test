@@ -1,4 +1,4 @@
-import { createApolloServer } from "./src/db";
+import { createApolloServer } from "./db";
 
 (async () => {
   const server = await createApolloServer();
