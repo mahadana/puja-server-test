@@ -17,6 +17,7 @@ services:
       DB_HOST: db
     volumes:
       - .:/app
+      - /app/dist
       - /app/node_modules
     ports:
       - "127.0.0.1:4000:4000"
