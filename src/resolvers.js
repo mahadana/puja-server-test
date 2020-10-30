@@ -23,7 +23,7 @@ const resolvers = {
       return models.Book.findAll();
     },
     test: (parent, args, context, info) => {
-      return "Hello World.";
+      return "Hello Jeff.";
     },
   },
   Mutation: {
