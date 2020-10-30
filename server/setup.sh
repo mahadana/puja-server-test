@@ -9,7 +9,6 @@ fi
 
 test -d /opt/puja-server-test || \
   git clone https://github.com/mahadana/puja-server-test.git /opt/puja-server-test
-/opt/puja-server-test/server/setup.sh
 
 cd /opt/puja-server-test
 
