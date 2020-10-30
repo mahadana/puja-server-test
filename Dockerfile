@@ -5,4 +5,5 @@ COPY package*.json ./
 RUN npm install --quiet
 COPY . .
 EXPOSE 4000
+USER node
 CMD [ "npm", "start" ]
