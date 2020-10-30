@@ -19,6 +19,7 @@ const schema = gql`
     books: [Book]
     author(id: ID!): Author
     authors: [Author]
+    test: String!
   }
 
   type Mutation {

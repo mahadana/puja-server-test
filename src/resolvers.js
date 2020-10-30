@@ -22,6 +22,9 @@ const resolvers = {
     books: (parent, args, { models }, info) => {
       return models.Book.findAll();
     },
+    test: (parent, args, context, info) => {
+      return "Hello World.";
+    },
   },
   Mutation: {
     createAuthor: (parent, { name }, { models }, info) => {
