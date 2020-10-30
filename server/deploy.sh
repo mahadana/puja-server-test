@@ -4,5 +4,6 @@
 
 cd /opt/puja-server-test
 git pull
+docker-compose build
 docker-compose stop
 docker-compose up -d
