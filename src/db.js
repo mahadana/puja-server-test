@@ -14,7 +14,7 @@ const createApolloServer = async () => {
     process.env.DB_USER,
     process.env.DB_PASSWORD,
     {
-      host: "db",
+      host: process.env.DB_HOST,
       dialect: "postgres",
     }
   );
