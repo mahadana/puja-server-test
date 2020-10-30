@@ -1,35 +1,35 @@
-import { DataTypes, Sequelize } from "sequelize";
+import { ApolloServer } from "apollo-server";
 import dotenv from "dotenv";
+import { Sequelize } from "sequelize";
 
-dotenv.config()
+import { defineModels } from "./models";
+import resolvers from "./resolvers";
+import schema from "./schema";
 
-const sequelize = new Sequelize(
-  process.env.DB_DATABASE,
-  process.env.DB_USER,
-  process.env.DB_PASSWORD,
-  {
-    host: "db",
-    dialect: "postgres",
-  }
-);
+const createApolloServer = async () => {
+  dotenv.config();
 
-const Author = sequelize.define("author", {
-  name: {
-    type: DataTypes.STRING,
-  },
-});
+  const sequelize = new Sequelize(
+    process.env.DB_DATABASE,
+    process.env.DB_USER,
+    process.env.DB_PASSWORD,
+    {
+      host: "db",
+      dialect: "postgres",
+    }
+  );
 
-const Book = sequelize.define("book", {
-  title: {
-    type: DataTypes.STRING,
-  },
-});
+  const models = defineModels(sequelize);
 
-Author.hasMany(Book, { onDelete: "CASCADE" });
-Book.belongsTo(Author);
+  await sequelize.sync({ force: false });
 
-export default {
-  sequelize,
-  Author,
-  Book,
+  const server = new ApolloServer({
+    typeDefs: schema,
+    resolvers,
+    context: { models },
+  });
+
+  return server;
 };
+
+export { createApolloServer };
