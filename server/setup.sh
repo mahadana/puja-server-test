@@ -33,13 +33,17 @@ ln -sf ../sites-available/puja-server-test \
 systemctl restart nginx.service
 
 test -x /usr/bin/webhook || apt-get install -y webhook
-cp server/webhook.conf /etc/webhook.conf
-if grep -q SECRET /etc/webhook.conf; then
-  webhook_secret="$(rand)"
-  perl -pi -e "s/SECRET/$webhook_secret/" /etc/webhook.conf
+if ! test -f /etc/webhook.conf.secret; then
+  touch /etc/webhook.conf.secret
+  chmod 600 /etc/webhook.conf.secret
+  rand > /etc/webhook.conf.secret
   echo "GitHub Webhook URL: https://puja-server-test.pujas.live/hooks/github-deploy"
-  echo "GitHub Webhook Secret: $webhook_secret"
+  echo "GitHub Webhook Secret: $(cat /etc/webhook.conf.secret)"
 fi
+touch /etc/webhook.conf
+chmod 600 /etc/webhook.conf
+cp server/webhook.conf /etc/webhook.conf
+perl -pi -e "s/SECRET/$(cat /etc/webhook.conf.secret)/" /etc/webhook.conf
 systemctl restart webhook.service
 
 /opt/puja-server-test/server/deploy.sh
