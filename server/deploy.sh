@@ -1,14 +1,13 @@
 #!/bin/bash
 
+[ "${FLOCKER}" != "$0" ] && exec env FLOCKER="$0" flock -en "$0" "$0" "$@" || :
+
 set -eu
 
-lock="/var/lock/puja-server-test-deploy.lock"
 log="/var/log/puja-server-test-deploy.log"
 
 (
-  flock -n 9 || exit 1
-
-  echo "$(date) start puja-server-test deploy"
+  echo "$(date) start $0"
 
   cd /opt/puja-server-test
   git pull
@@ -17,6 +16,6 @@ log="/var/log/puja-server-test-deploy.log"
   docker-compose -f docker-compose.yml -f docker-compose.server.yml up -d
   docker image prune -f
 
-  echo "$(date) end puja-server-test deploy"
+  echo "$(date) end $0"
 
-) >>"$log" 2>&1 9>"$lock" &
+) 2>&1 | tee -a "$log"
