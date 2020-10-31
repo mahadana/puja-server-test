@@ -1,4 +1,4 @@
-import { ApolloServer } from "apollo-server";
+import { ApolloServer } from "apollo-server-express";
 import dotenv from "dotenv";
 import { Sequelize } from "sequelize";
 
