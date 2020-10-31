@@ -7,14 +7,16 @@ if [[ "$(id -u)" != "0" ]]; then
   exit 1
 fi
 
+function rand {
+  head /dev/urandom | tr -dc A-Za-z0-9 | head -c 8
+}
+
 test -d /opt/puja-server-test || \
   git clone https://github.com/mahadana/puja-server-test.git /opt/puja-server-test
 
 cd /opt/puja-server-test
 
-test -f .env || cat <<END > .env
-DB_PASSWORD=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 8)
-END
+test -f .env || echo "DB_PASSWORD=$(rand)" > .env
 
 test -x /usr/sbin/nginx || apt-get install -y nginx-light
 test -x /usr/bin/certbot || apt-get install -y certbot
@@ -32,8 +34,12 @@ systemctl restart nginx.service
 
 test -x /usr/bin/webhook || apt-get install -y webhook
 cp server/webhook.conf /etc/webhook.conf
-perl -pi -e 's/SECRET/mysecret/' /etc/webhook.conf
-# TODO ask for and manipulate secret
+if grep -q SECRET /etc/webhook.conf; then
+  webhook_secret="$(rand)"
+  perl -pi -e "s/SECRET/$webhook_secret/" /etc/webhook.conf
+  echo "GitHub Webhook URL: https://puja-server-test.pujas.live/hooks/github-deploy"
+  echo "GitHub Webhook Secret: $webhook_secret"
+fi
 systemctl restart webhook.service
 
 /opt/puja-server-test/server/deploy.sh
