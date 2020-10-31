@@ -13,10 +13,7 @@ test -d /opt/puja-server-test || \
 cd /opt/puja-server-test
 
 test -f .env || cat <<END > .env
-DB_PORT=5432
-DB_DATABASE=test
-DB_USER=user
-DB_PASSWORD=password
+DB_PASSWORD=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 8)
 END
 
 test -x /usr/sbin/nginx || apt-get install -y nginx-light
