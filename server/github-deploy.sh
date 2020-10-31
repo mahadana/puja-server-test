@@ -4,8 +4,6 @@
 
 set -eu
 
-(
-  cd /opt/puja-server-test
-  git pull
-  server/deploy.sh
-) > /dev/null 2>&1 &
+cd /opt/puja-server-test
+git pull
+nohup server/deploy.sh > /dev/null 2>&1 &
