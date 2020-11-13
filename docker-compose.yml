@@ -14,10 +14,11 @@ services:
     build: .
     command: bash -c "npm run sync && npm run dev"
     volumes:
-      - .:/app
       - /app/.next
       - /app/node_modules
     ports:
       - "127.0.0.1:3000:3000"
+    environment:
+      DB_PASSWORD: ${DB_PASSWORD}
     depends_on:
       - db
