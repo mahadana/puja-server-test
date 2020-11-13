@@ -1,10 +1,7 @@
 FROM node:12
-RUN mkdir /app
-RUN chown node:node /app
-USER node
+COPY --chown=node:node . /app
 WORKDIR /app
-COPY package*.json ./
+USER node
+RUN mkdir -p .next node_modules
 RUN npm install --quiet
-COPY . .
-RUN npm run build
-EXPOSE 4000
+EXPOSE 3000

@@ -4,27 +4,26 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "babel -d dist src",
-    "serve": "node dist/index.js",
-    "start": "nodemon --exec npx babel-node src/index.js",
+    "build": "next build",
+    "dev": "next dev",
+    "start": "next start",
+    "sync": "babel-node src/sync-db.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "apollo-server": "^2.18.2",
-    "apollo-server-express": "^2.19.0",
+    "@apollo/client": "^3.2.5",
+    "@babel/node": "^7.12.1",
+    "@nestjs/schedule": "^0.4.1",
+    "apollo-server-micro": "^2.19.0",
     "dotenv": "^8.2.0",
-    "graphql": "^15.3.0",
-    "pg": "^8.4.1",
+    "graphql": "^15.4.0",
+    "next": "^10.0.0",
+    "next-apollo": "^5.0.2",
+    "pg": "^8.4.2",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
     "sequelize": "^6.3.5"
-  },
-  "devDependencies": {
-    "@babel/cli": "^7.12.1",
-    "@babel/core": "^7.12.0",
-    "@babel/node": "^7.10.5",
-    "@babel/plugin-transform-runtime": "^7.12.1",
-    "@babel/preset-env": "^7.12.0",
-    "nodemon": "^2.0.6"
   }
 }

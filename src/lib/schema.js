@@ -1,4 +1,4 @@
-import { gql } from "apollo-server";
+import { gql } from "apollo-server-micro";
 
 const schema = gql`
   type Book {
@@ -25,6 +25,7 @@ const schema = gql`
   type Mutation {
     createAuthor(name: String!): Author!
     createBook(title: String!, authorId: ID!): Book!
+    deleteAuthor(id: ID!): ID
   }
 `;
 

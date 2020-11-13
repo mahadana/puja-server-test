@@ -36,6 +36,15 @@ const resolvers = {
         authorId,
       });
     },
+    deleteAuthor: async (parent, { id }, { models }, info) => {
+      const author = await models.Author.findByPk(id);
+      if (author) {
+        await author.destroy();
+        return id;
+      } else {
+        return null;
+      }
+    },
   },
 };
 

@@ -12,12 +12,12 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
   app:
     build: .
-    command: npm start
+    command: bash -c "npm run sync && npm run dev"
     volumes:
       - .:/app
-      - /app/dist
+      - /app/.next
       - /app/node_modules
     ports:
-      - "127.0.0.1:4000:4000"
+      - "127.0.0.1:3000:3000"
     depends_on:
       - db
