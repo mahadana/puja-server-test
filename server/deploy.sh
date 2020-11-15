@@ -11,9 +11,9 @@ log="/var/log/puja-server-test-deploy.log"
 
   cd /opt/puja-server-test
   git pull
-  docker-compose build --no-cache
-  docker-compose rm -fs app
-  docker-compose -f docker-compose.yml -f server/docker-compose.server.yml up -d
+  docker-compose -f docker-compose.server.yml build --no-cache
+  docker-compose -f docker-compose.server.yml rm -fs app
+  docker-compose -f docker-compose.server.yml up -d
   docker image prune -f
 
   echo "$(date) end $0"

@@ -1,5 +1,5 @@
 version: "3"
-   
+
 services:
   db:
     image: postgres
@@ -7,20 +7,20 @@ services:
     environment:
       POSTGRES_DB: app
       POSTGRES_USER: app
-      POSTGRES_PASSWORD: app
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
     networks:
       - backend
-  app:
-    build: .
-    command: bash -c "npm run sync && npm run dev"
     volumes:
-      - .:/app
-      - /app/.next
-      - /app/node_modules
+      - pgdata:/var/lib/postgresql/data
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.server
+    command: bash -c "npm run sync && npm start"
     ports:
       - "127.0.0.1:3000:3000"
     environment:
-      DB_PASSWORD: app
+      DB_PASSWORD: ${DB_PASSWORD}
     depends_on:
       - db
     networks:
@@ -30,3 +30,6 @@ services:
 networks:
   frontend:
   backend:
+
+volumes:
+  pgdata:
