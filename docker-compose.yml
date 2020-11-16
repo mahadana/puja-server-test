@@ -23,7 +23,7 @@ services:
     ports:
       - "127.0.0.1:3000:3000"
     environment:
-      DB_PASSWORD: app
+      DB_PASSWORD: ${DB_PASSWORD}
     depends_on:
       - db
       - redis
