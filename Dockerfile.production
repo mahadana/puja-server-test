@@ -3,5 +3,5 @@ EXPOSE 3000
 COPY --chown=node:node . /app
 WORKDIR /app
 USER node
-RUN npm install --quiet
+RUN npm install --quiet --production
 RUN npm run build

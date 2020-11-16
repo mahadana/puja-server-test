@@ -6,9 +6,11 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev",
+    "dev-worker": "nodemon --exec npm run worker",
     "start": "next start",
     "sync": "babel-node src/sync-db.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "worker": "babel-node src/worker.js"
   },
   "author": "",
   "license": "ISC",
@@ -17,6 +19,7 @@
     "@babel/node": "^7.12.1",
     "@nestjs/schedule": "^0.4.1",
     "apollo-server-micro": "^2.19.0",
+    "bee-queue": "^1.3.1",
     "dotenv": "^8.2.0",
     "graphql": "^15.4.0",
     "next": "^10.0.0",
@@ -25,5 +28,8 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "sequelize": "^6.3.5"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
   }
 }

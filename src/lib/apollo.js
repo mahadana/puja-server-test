@@ -4,7 +4,6 @@ import { offsetLimitPagination } from "@apollo/client/utilities";
 
 const apolloClient = new ApolloClient({
   cache: new InMemoryCache(),
-  ssr: true,
   uri: "/api/graphql",
 });
 

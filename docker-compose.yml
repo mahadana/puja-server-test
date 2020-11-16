@@ -2,16 +2,19 @@ version: "3"
    
 services:
   db:
-    image: postgres
+    image: postgres:latest
     restart: unless-stopped
     environment:
       POSTGRES_DB: app
       POSTGRES_USER: app
-      POSTGRES_PASSWORD: app
-    networks:
-      - backend
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+  redis:
+    image: redis:latest
+    restart: unless-stopped
   app:
+    image: puja-server-test_app
     build: .
+    restart: unless-stopped
     command: bash -c "npm run sync && npm run dev"
     volumes:
       - .:/app
@@ -23,10 +26,18 @@ services:
       DB_PASSWORD: app
     depends_on:
       - db
-    networks:
-      - frontend
-      - backend
-
-networks:
-  frontend:
-  backend:
+      - redis
+  worker:
+    image: puja-server-test_app
+    restart: unless-stopped
+    command: npm run dev-worker
+    volumes:
+      - .:/app
+      - /app/.next
+      - /app/node_modules
+    environment:
+      DB_PASSWORD: ${DB_PASSWORD}
+    depends_on:
+      - app
+      - db
+      - redis

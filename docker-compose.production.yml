@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+  db:
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+  redis:
+    volumes:
+      - redis:/var/lib/redis
+  app:
+    image: puja-server-test_production-app
+    build:
+      context: .
+      dockerfile: Dockerfile.production
+    command: bash -c "npm run sync && npm start"
+    volumes: []
+  worker:
+    image: puja-server-test_production-app
+    restart: unless-stopped
+    command: npm run worker
+    volumes: []
+
+volumes:
+  pgdata:
+  redis:
