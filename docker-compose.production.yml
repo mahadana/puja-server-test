@@ -2,6 +2,8 @@ version: "3"
 
 services:
   db:
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
       - pgdata:/var/lib/postgresql/data
   redis:
@@ -13,12 +15,15 @@ services:
       context: .
       dockerfile: Dockerfile.production
     command: bash -c "npm run sync && npm start"
-    volumes: []
+    environment:
+      DB_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "127.0.0.1:3000:3000"
   worker:
     image: puja-server-test_production-app
-    restart: unless-stopped
     command: npm run worker
-    volumes: []
+    environment:
+      DB_PASSWORD: ${DB_PASSWORD}
 
 volumes:
   pgdata:

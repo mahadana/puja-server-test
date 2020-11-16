@@ -8,7 +8,6 @@ Install [Docker](https://docs.docker.com/get-docker/) and
 ```sh
 git clone https://github.com/mahadana/puja-server-test.git
 cd puja-server-test
-echo 'DB_PASSWORD=app' > .env
 docker-compose up
 ```
 

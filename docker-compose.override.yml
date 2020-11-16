@@ -1,0 +1,22 @@
+version: "3"
+
+services:
+  db:
+    environment:
+      POSTGRES_PASSWORD: app
+  app:
+    environment:
+      DB_PASSWORD: app
+    ports:
+      - "127.0.0.1:3000:3000"
+    volumes:
+      - .:/app
+      - /app/.next
+      - /app/node_modules
+  worker:
+    environment:
+      DB_PASSWORD: app
+    volumes:
+      - .:/app
+      - /app/.next
+      - /app/node_modules

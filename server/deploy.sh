@@ -17,7 +17,7 @@ log="/var/log/puja-server-test-deploy.log"
   }
 
   docker-compose-production build --no-cache
-  docker-compose-production rm -fs app
+  docker-compose-production rm -fs app worker
   docker-compose-production up -d
   docker image prune -f
 

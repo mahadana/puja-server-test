@@ -7,7 +7,6 @@ services:
     environment:
       POSTGRES_DB: app
       POSTGRES_USER: app
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
   redis:
     image: redis:latest
     restart: unless-stopped
@@ -16,14 +15,6 @@ services:
     build: .
     restart: unless-stopped
     command: bash -c "npm run sync && npm run dev"
-    volumes:
-      - .:/app
-      - /app/.next
-      - /app/node_modules
-    ports:
-      - "127.0.0.1:3000:3000"
-    environment:
-      DB_PASSWORD: ${DB_PASSWORD}
     depends_on:
       - db
       - redis
@@ -31,13 +22,6 @@ services:
     image: puja-server-test_app
     restart: unless-stopped
     command: npm run dev-worker
-    volumes:
-      - .:/app
-      - /app/.next
-      - /app/node_modules
-    environment:
-      DB_PASSWORD: ${DB_PASSWORD}
     depends_on:
-      - app
       - db
       - redis
